@@ -1,4 +1,4 @@
-# JobNow Api
+# Products, Customers and Invoices Api
 
 This project was developed on node.js / TypeScript
 
