@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import AuthService from "../services/auth.service";
+import React, { useState } from "react"
+import AuthService from "../services/auth.service"
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -7,11 +7,11 @@ import Button from 'react-bootstrap/Button'
 
 const Login = () => {
 
-  const [submitted, setSubmitted] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [regexMessage, setRegexMessage] = useState(true);
+  const [submitted, setSubmitted] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [message, setMessage] = useState("")
+  const [regexMessage, setRegexMessage] = useState(true)
 
 
   function onChangeEmail(event) {
@@ -27,7 +27,7 @@ const Login = () => {
       if (e.target.value.length >= 6){
         setPassword(e.target.value);
       } 
-    };
+    }
 
 
     const checkLogin = (e) => {
@@ -43,7 +43,7 @@ const Login = () => {
 
   const handleLogin = () => {
 
-      AuthService.login(email, password).then(
+      AuthService.register(email, password).then(
         () => {
             window.location.href = "/home"
         },
@@ -68,24 +68,27 @@ const Login = () => {
                 <Card.Body >
                     <h1>Login</h1>
                     <Form onSubmit={checkLogin}>
+
                         <Form.Group>
                             <Form.Control type="text" name="email" placeholder="Email" onChange={onChangeEmail} />
                         </Form.Group>
                         <div className="error-div">
                             {submitted && !email && <span className='erro-contact'>Incorret E-mail</span>} 
                         </div>
+
                         <Form.Group>
                             <Form.Control type="text" name="password" placeholder="Password" onChange={onChangePassword}/>
                         </Form.Group>
                         <div className="error-div">
                             {submitted && !password && <span className='erro-contact'>Incorret Password</span>} 
                         </div>
+
                         <Button variant="primary" type="submit">Submit</Button>
                         <div className="error-back">
                             {submitted && !regexMessage && <span className='erro-contact'>{message}</span>} 
                         </div>
-                        
-                       <div className="link-register">
+                
+                       <div className="link">
                          <p><a href="/register">Sign Up</a></p>
                        </div>
                     </Form>
