@@ -1,4 +1,4 @@
-# Products, Customers and Invoices
+# Products, Customers and Invoices - FrontEnd
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
