@@ -1,0 +1,36 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+/* @font-face{
+    font-family: 'akkurat';
+    src: url('../fonts/FontsFree-Net-Akkurat.ttf')
+} */
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+}
+
+button, a { cursor: pointer }
+
+button:focus {
+    outline: thin dotted;
+    outline: 0px auto -webkit-focus-ring-color;
+    outline-offset: 0px;
+}
+
+
+img{
+    display: block;
+    max-width: 100%;
+} 
+
+h1 {
+    font-size: 1.5rem;
+}
+
+
+
