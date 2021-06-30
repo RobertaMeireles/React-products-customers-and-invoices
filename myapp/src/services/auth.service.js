@@ -9,11 +9,11 @@ const register = (email, password, nome) => {
     password,
     nome,
   })
-  .then((response) => {
-    if (response.data.accessToken) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+  .then((res) => {
+    if (res.data) {
+      localStorage.setItem("user", JSON.stringify(res.data));
     }
-    return response.data;
+    return res.data;
   })
 };
 
@@ -47,3 +47,16 @@ export default {
   getCurrentUser,
 };
 
+// const login = (email, password) => {
+//   return axios
+//     .post(API_URL + "/auth/login", {
+//         email,
+//         password,
+//     })
+//     .then((response) => {
+//       if (response.data.accessToken) {
+//         localStorage.setItem("user", JSON.stringify(response.data));
+//       }
+//       return response.data;
+//     })
+// };

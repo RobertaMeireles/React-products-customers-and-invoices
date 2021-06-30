@@ -12,7 +12,7 @@ function Header () {
 
     return (
         <Navbar fixed="top" bg="light" expand="lg">
-            <Navbar.Brand href="/">Project Products</Navbar.Brand>
+            <Navbar.Brand href="/home">Project Products</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

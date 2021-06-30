@@ -1,11 +1,34 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from "axios"
+import authHeader from "../../services/auth-header"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 
+
 const Products = () => {
+
+    const [products, setProducts] = useState([])
+
+    const getProducts = () => {
+        axios.get('http://localhost:5000/api/products', { headers: authHeader() })
+        .then(response => {
+            setProducts(response.data.products)
+            console.log(response.data.products)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+
+    useEffect (() =>{
+
+        getProducts()
+
+    },[])
+
     return (
         <>
             <header>
@@ -18,9 +41,33 @@ const Products = () => {
                 <div className = "card-div">
                     <Card>
                         <Card.Body>
+                        {/* <div>
+                            <select >
+                                <option value="0">Selecione uma opção</option>
+                                {products.map(product => (<option key={product.id} value={product.id}>{product.designacao}</option>))}
+                            </select>
+                        </div> */}
+
                             <h1>Products</h1>
                             <Button href="/product/create" variant="primary">Create</Button>
                             <Table striped bordered hover>
+                        
+
+                            {/* <table>
+                            <tbody>
+                            {linhas.map((linha) => (
+                                <tr key={linha}>
+                                {colunas.map((coluna) => (
+                                    <td
+                                    key={coluna}
+                                    style={{ border: "solid #ccc" }}
+                                    >{`(${linha}, ${coluna})`}</td>
+                                ))}
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table> */}
+
                                 <thead>
                                     <tr>
                                     <th>#</th>
@@ -29,23 +76,14 @@ const Products = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td><a href="/product/update"><i className="fas fa-edit update"></i></a>
-                                        <a href="/product/delete"><i className="fas fa-times-circle delete"></i></a>
-                                    </td>
+                                {products.map((product) => (
+                                    <tr key={product.id}>
+                                        <td>{product.id}</td>
+                                        <td>{product.designacao}</td>
+                                        <td><a href={product.id}><i className="fas fa-edit update"></i></a><a href="/product/delete/{product.id}"><i className="fas fa-times-circle delete"></i></a></td>
                                     </tr>
-                                    <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td><i className="fas fa-edit update"> <i className="fas fa-times-circle delete"></i></i></td>
-                                    </tr>
-                                    <tr>
-                                    <td>3</td>
-                                    <td>Larry the Bird</td>
-                                    <td><i className="fas fa-edit update"> <i className="fas fa-times-circle delete"></i></i></td>
-                                    </tr>
+                                    
+                                ))}
                                 </tbody>
                             </Table>
                         </Card.Body>
@@ -57,3 +95,6 @@ const Products = () => {
 }
 
 export default Products
+
+
+
