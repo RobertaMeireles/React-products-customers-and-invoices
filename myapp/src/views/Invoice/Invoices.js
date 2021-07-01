@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from "axios"
+import authHeader from "../../services/auth-header"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -6,6 +8,25 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 
 const Invoices = () => {
+
+    const [invoices, setInvoices] = useState([])
+
+    const getInvoices = () => {
+        axios.get('http://localhost:5000/api/invoices', { headers: authHeader() })
+        .then(response => {
+            setInvoices(response.data.invoices)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+
+    useEffect (() =>{
+
+        getInvoices()
+
+    },[])
+
     return (
         <>
             <header>
@@ -29,21 +50,13 @@ const Invoices = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td><i className="fas fa-times-circle delete"></i></td>
+                                {invoices.map((invoice) => (
+                                    <tr key={invoice.id}>
+                                        <td>{invoice.id}</td>
+                                        <td>{invoice.cliente}</td>
+                                        <td><a href={'/invoice/update/'+ invoice.id}><i className="fas fa-edit update"></i></a><a href={'/invoice/delete/'+ invoice.id}><i className="fas fa-times-circle delete"></i></a></td>
                                     </tr>
-                                    <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td><i className="fas fa-times-circle delete"></i></td>
-                                    </tr>
-                                    <tr>
-                                    <td>3</td>
-                                    <td>Larry the Bird</td>
-                                    <td><i className="fas fa-times-circle delete"></i></td>
-                                    </tr>
+                                ))}
                                 </tbody>
                             </Table>
                         </Card.Body>

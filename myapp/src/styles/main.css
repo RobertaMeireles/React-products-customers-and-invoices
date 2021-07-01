@@ -10,7 +10,7 @@
 /*SideBar*/
 .side {
     width: 15rem;
-    height: 100vh;
+    height: 100%;
     padding-top: 4rem;
     background-color: #334E72;
 }

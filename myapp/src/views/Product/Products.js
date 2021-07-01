@@ -16,7 +16,6 @@ const Products = () => {
         axios.get('http://localhost:5000/api/products', { headers: authHeader() })
         .then(response => {
             setProducts(response.data.products)
-            console.log(response.data.products)
         })
         .catch(error => {
             console.error(error)
@@ -51,23 +50,6 @@ const Products = () => {
                             <h1>Products</h1>
                             <Button href="/product/create" variant="primary">Create</Button>
                             <Table striped bordered hover>
-                        
-
-                            {/* <table>
-                            <tbody>
-                            {linhas.map((linha) => (
-                                <tr key={linha}>
-                                {colunas.map((coluna) => (
-                                    <td
-                                    key={coluna}
-                                    style={{ border: "solid #ccc" }}
-                                    >{`(${linha}, ${coluna})`}</td>
-                                ))}
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table> */}
-
                                 <thead>
                                     <tr>
                                     <th>#</th>
@@ -80,9 +62,8 @@ const Products = () => {
                                     <tr key={product.id}>
                                         <td>{product.id}</td>
                                         <td>{product.designacao}</td>
-                                        <td><a href={product.id}><i className="fas fa-edit update"></i></a><a href="/product/delete/{product.id}"><i className="fas fa-times-circle delete"></i></a></td>
+                                        <td><a href={'/product/update/'+ product.id}><i className="fas fa-edit update"></i></a><a href={'/product/delete/'+ product.id}><i className="fas fa-times-circle delete"></i></a></td>
                                     </tr>
-                                    
                                 ))}
                                 </tbody>
                             </Table>

@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from "axios"
+import authHeader from "../../services/auth-header"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -6,6 +8,25 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 
 const Cutomers = () => {
+
+    const [customers, setCustomers] = useState([])
+
+    const getCutomers = () => {
+        axios.get('http://localhost:5000/api/customers', { headers: authHeader() })
+        .then(response => {
+            setCustomers(response.data.customers)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+
+    useEffect (() =>{
+
+        getCutomers()
+
+    },[])
+
     return (
         <>
             <header>
@@ -29,23 +50,13 @@ const Cutomers = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td><a href="/customer/update"><i className="fas fa-edit update"></i></a>
-                                        <a href="/customer/delete"><i className="fas fa-times-circle delete"></i></a>
-                                    </td>
+                                {customers.map((customer) => (
+                                    <tr key={customer.id}>
+                                        <td>{customer.id}</td>
+                                        <td>{customer.nome}</td>
+                                        <td><a href={'/customer/update/'+ customer.id}><i className="fas fa-edit update"></i></a><a href={'/customer/delete/'+ customer.id}><i className="fas fa-times-circle delete"></i></a></td>
                                     </tr>
-                                    <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td><i className="fas fa-edit update"> <i className="fas fa-times-circle delete"></i></i></td>
-                                    </tr>
-                                    <tr>
-                                    <td>3</td>
-                                    <td>Larry the Bird</td>
-                                    <td><i className="fas fa-edit update"> <i className="fas fa-times-circle delete"></i></i></td>
-                                    </tr>
+                                ))}
                                 </tbody>
                             </Table>
                         </Card.Body>
