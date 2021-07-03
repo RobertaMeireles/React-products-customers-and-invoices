@@ -11,6 +11,7 @@ router.post('/api/auth/login', AuthController.login)
 router.post('/api/auth/signup', AuthController.signUp)
 
 // Products
+// Products
 router.post('/api/products', ProductsController.add)
 router.put('/api/products/update/:id', ProductsController.update)
 router.put('/api/products/delete/:id', ProductsController.delete)

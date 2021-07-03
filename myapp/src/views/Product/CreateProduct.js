@@ -1,12 +1,39 @@
-import React from 'react'
+import React, { useState } from "react"
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
-
 const CreateProduct = () => {
+
+    const [submitted, setSubmitted] = useState(false)
+    const [designation, setDesignation] = useState('')
+    const [description, setDescription] = useState('')
+    const [category, setCategory] = useState('')
+    const [price, setPrice] = useState('')
+
+    const checkFields = (e) => {
+        e.preventDefault()
+        if (designation && description &&  category && price){
+            createProduct()
+            setSubmitted(false)
+        }else {
+            setSubmitted(true)
+        }
+    }
+
+    const createProduct = () => {
+        services.create('Product','products', 
+            {
+                designacao: designation,
+                descricao: description,
+                preco: price,
+                id_categoria: category
+            })
+    }
+
     return (
         <>
             <header>
@@ -20,18 +47,18 @@ const CreateProduct = () => {
                     <Card>  
                         <Card.Body>
                             <h1>New Product</h1>
-                            <Form className="form-itens">
+                            <Form className="form-itens" onSubmit={checkFields}>
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Name" />
+                                    <Form.Control type="text" placeholder="Name" name="designacao" onChange={(e) => setDesignation(e.target.value)} />
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Description" />
+                                    <Form.Control type="text" placeholder="Description" name="descricao" onChange={(e) => setDescription(e.target.value)}/>
                                 </Form.Group>
 
                                 <Form.Group controlId="exampleForm.ControlSelect1">
-                                    <Form.Control as="select">
-                                    <option value="" disabled selected>Choose your option</option>
+                                    <Form.Control as="select" name="id_categoria" onChange={(e) => setCategory(e.target.value)}>
+                                    <option value="" name={category} disabled selected>Choose your option</option>
                                     <option value="1">Processors</option>
                                     <option value="2">Memories</option>
                                     <option value="3">Hard Drives</option>
@@ -50,11 +77,10 @@ const CreateProduct = () => {
                                     </Form.Control>
                                 </Form.Group>
 
-
                                 <Form.Group>
-                                    <Form.Control type="number" placeholder="Price (€)" />
+                                    <Form.Control type="number" placeholder="Price (€)" name="preco" onChange={(e) => setPrice(e.target.value)}/>
                                 </Form.Group>
-
+        
                                 <Button className="form-submit" variant="primary" type="submit">
                                     Submit
                                 </Button>
@@ -62,6 +88,7 @@ const CreateProduct = () => {
                                     Cancel
                                 </Button>
                             </Form>
+                            { submitted && <span className='erro-contact'>All fields are required.</span>} 
                         </Card.Body>
                     </Card>
                 </div>
