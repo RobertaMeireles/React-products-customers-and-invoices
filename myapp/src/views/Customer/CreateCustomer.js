@@ -61,7 +61,6 @@ const CreateCustomer = () => {
 
                                 <Form.Group name="id_cod_postal" controlId="exampleForm.ControlSelect1" >
                                     <Form.Control as="select" name="cod_postal" onChange={(e) => setZipCode(e.target.value)}>
-                                        <option value="" disabled selected>Choose your option</option>
                                         <option value="" disabled selected>City</option>
                                         <option value="1500">Lisboa</option>
                                         <option value="2350">Torres Novas</option>
