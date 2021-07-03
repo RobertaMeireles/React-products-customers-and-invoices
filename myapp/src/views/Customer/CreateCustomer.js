@@ -25,7 +25,7 @@ const CreateCustomer = () => {
     }
 
     const createCustomer = () => {
-        services.create('Customers','customers', 
+        services.create('Customer','customers', 
             {
                 nome: name,
                 idade: age,
