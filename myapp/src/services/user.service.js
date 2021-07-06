@@ -19,9 +19,12 @@ const create = (info, request, data) => {
   })
 }
 
+// update(info, request id, data) {
+//   return http.put(`/tutorials/${id}`, data);
+// }
 
 
 // eslint-disable-next-line
 export default {
   create,
-};
+}

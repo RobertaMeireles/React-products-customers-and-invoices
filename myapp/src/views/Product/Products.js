@@ -62,7 +62,7 @@ const Products = () => {
                                     <tr key={product.id}>
                                         <td>{product.id}</td>
                                         <td>{product.designacao}</td>
-                                        <td><a href={'/product/update/'+ product.id}><i className="fas fa-edit update"></i></a><a href={'/product/delete/'+ product.id}><i className="fas fa-times-circle delete"></i></a></td>
+                                        <td><a href={'/api/products/update/'+ product.id}><i className="fas fa-edit update"></i></a><a href={'/product/delete/'+ product.id}><i className="fas fa-times-circle delete"></i></a></td>
                                     </tr>
                                 ))}
                                 </tbody>
