@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import authHeader from "../../services/auth-header"
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-
 
 const UpdateProduct = (props) => {
 
@@ -17,17 +15,16 @@ const UpdateProduct = (props) => {
         preco: "", 
         id_categoria: ""
     }
-    const [currentId, setCurrentId] = useState('')
+
     const [currentProduct, setCurrentProduct] = useState(initialProduct)
 
     const handleInputChange = e => {
         const { name, value } = e.target
         setCurrentProduct({ ...currentProduct, [name]: value })
-    };
+    }
 
-    const getProduct = (id) => {   
-        setCurrentId(id)
-        axios.get(`http://localhost:5000/api/products/id/${id}`, { headers: authHeader() })
+    const getProduct = (id) => {
+        services.getId(`products/id/${id}`)
         .then(response => {
             setCurrentProduct(response.data.product)
         })
@@ -35,16 +32,10 @@ const UpdateProduct = (props) => {
             console.error(error)
         })
     }
-  
+
     const updateProduct = (e) => {
-        axios.put(`http://localhost:5000/api/products/update/${currentId}`, currentProduct , { headers: authHeader() })
-        .then(response => {
-            console.log(response.data)
-        })
-        .catch(e => {
-            console.error(e);
-        });
-      };
+        services.update('Product',`products/update/${currentProduct.id}`, currentProduct)
+      }
       
     useEffect (() =>{
 
@@ -86,8 +77,7 @@ const UpdateProduct = (props) => {
                                     <Form.Control as="select" 
                                                   name="id_categoria" 
                                                   value={currentProduct.id_categoria}
-                                                  onChange={handleInputChange}
-                                                  >
+                                                  onChange={handleInputChange}>
                                     <option value="1">Processors</option>
                                     <option value="2">Memories</option>
                                     <option value="3">Hard Drives</option>
@@ -106,23 +96,20 @@ const UpdateProduct = (props) => {
                                     </Form.Control>
                                 </Form.Group>
 
-
                                 <Form.Group>
                                     <Form.Control type="number" 
                                     name="preco"
                                     defaultValue={currentProduct.preco}
-                                    onChange={handleInputChange}
-                                    />
-
+                                    onChange={handleInputChange}/>
                                 </Form.Group>
                                 
-
                                 <Button className="form-submit" variant="primary" type="submit">
                                     Submit
                                 </Button>
                                 <Button variant="danger" type="button">
-                                    Cancel
+                                    <a  className="link-form" href="/home">Cancel</a>
                                 </Button>
+
                             </Form>
                             ) : (
                                 <div>

@@ -19,12 +19,27 @@ const create = (info, request, data) => {
   })
 }
 
-// update(info, request id, data) {
-//   return http.put(`/tutorials/${id}`, data);
-// }
+
+const getId = (request) => {
+  return axios.get( `${API_URL}${request}`, { headers: authHeader() })
+}
+
+
+const update = (info, request, data) => {
+  return axios.put(`${API_URL}${request}`, data, { headers: authHeader() })
+  .then((res) => {
+    alert(`${info} updated.`)
+    return res.data
+  }).catch((error) => {
+    console.error(error)
+    alert(`A problem occurred in the updated, try again later.`)
+})
+}
 
 
 // eslint-disable-next-line
 export default {
   create,
+  getId,
+  update,
 }

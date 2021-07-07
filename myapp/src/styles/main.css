@@ -104,3 +104,12 @@ a.nav-link.side-bar {
 .form-user .link p{
     text-align: center
 }
+
+.link-form {
+    color: #fff;
+}
+
+.link-form:hover {
+    text-decoration: none;
+    color: #fff;
+}

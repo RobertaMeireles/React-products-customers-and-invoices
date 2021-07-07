@@ -22,16 +22,16 @@ export default function Routes(){
             <Route path='/' exact component={Login} />
             <Route path='/register' component={Register} />
             <Route path='/home' component={Home} />
-            <Route path='/products' component={Products} />
-            <Route path='/product/create' component={CreateProduct} />
-            <Route path='/api/products/update/:id' component={UpdateProduct} />
+            <Route path='/products/update/:id' component={UpdateProduct} />
             <Route path='/product/delete/:id' component={DeleteProduct} />
-            <Route path='/customers' component={Customers} />
-            <Route path='/customer/create' component={CreateCustomers} />
+            <Route path='/product/create' component={CreateProduct} />
+            <Route path='/products' component={Products} />
             <Route path='/customer/update/:id' component={UpdateCustomers} />
             <Route path='/customer/delete/:id' component={DeleteCustomers} />
-            <Route path='/invoices' component={Invoices} />
+            <Route path='/customer/create' component={CreateCustomers} />
+            <Route path='/customers' component={Customers} />
             <Route path='/invoice/create' component={CreateInvoices} />
+            <Route path='/invoices' component={Invoices} />
         </Switch>
     )
 }
