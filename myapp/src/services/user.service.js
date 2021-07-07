@@ -32,7 +32,17 @@ const update = (info, request, data) => {
     return res.data
   }).catch((error) => {
     console.error(error)
-    alert(`A problem occurred in the updated, try again later.`)
+    alert(`A problem occurred in the update, try again later.`)
+})
+}
+
+const deleteId = (info, request, data) => {
+  return axios.put(`${API_URL}${request}`, data, { headers: authHeader() })
+  .then((res) => {
+    alert(`${info} deleted.`)
+  }).catch((error) => {
+    console.error(error)
+    alert(`A problem occurred in the deleted, try again later.`)
 })
 }
 
@@ -42,4 +52,5 @@ export default {
   create,
   getId,
   update,
+  deleteId,
 }

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -6,7 +7,39 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 
-const DeleteProduct = () => {
+const DeleteProduct = (props) => {
+
+    const initialProduct = { 
+        id: null,
+        designacao: "", 
+        descricao: "", 
+        preco: "", 
+        id_categoria: ""
+    }
+
+    const [currentProduct, setCurrentProduct] = useState(initialProduct)
+
+    const getProduct = (id) => {
+        services.getId(`products/id/${id}`)
+        .then(response => {
+            setCurrentProduct(response.data.product)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+
+    const deleteProduct = () => {
+        services.deleteId('Product',`products/delete/${currentProduct.id}`, currentProduct)
+        props.history.push("/home")
+    }
+
+    useEffect (() =>{
+
+        getProduct(props.match.params.id)
+
+    },[props.match.params.id])
+
     return (
         <>
             <header>
@@ -20,18 +53,26 @@ const DeleteProduct = () => {
                     <Card>  
                         <Card.Body>
                             <h1>New Product</h1>
-                            <Form className="form-itens">
+                            <Form className="form-itens" onSubmit={deleteProduct}>
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Name" />
+                                    <Form.Control type="text"                                  
+                                    name="designacao" 
+                                    disabled="disabled"
+                                    defaultValue={currentProduct.designacao} />
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Description" />
+                                    <Form.Control type="text"
+                                    name="descricao"
+                                    disabled="disabled"
+                                    defaultValue={currentProduct.descricao}
+                                    />
                                 </Form.Group>
 
                                 <Form.Group controlId="exampleForm.ControlSelect1">
-                                    <Form.Control as="select">
-                                    <option value="" disabled selected>Choose your option</option>
+                                    <Form.Control as="select" disabled="disabled"
+                                        name="id_categoria" 
+                                        value={currentProduct.id_categoria}>
                                     <option value="1">Processors</option>
                                     <option value="2">Memories</option>
                                     <option value="3">Hard Drives</option>
@@ -52,14 +93,17 @@ const DeleteProduct = () => {
 
 
                                 <Form.Group>
-                                    <Form.Control type="number" placeholder="Price (€)" />
+                                    <Form.Control type="number" 
+                                        name="preco"
+                                        disabled="disabled"
+                                        defaultValue={currentProduct.preco} />
                                 </Form.Group>
 
                                 <Button className="form-submit" variant="primary" type="submit">
                                     Submit
                                 </Button>
-                                <Button variant="danger" type="submit">
-                                    Cancel
+                                <Button variant="danger" type="button">
+                                    <a  className="link-form" href="/home">Cancel</a>
                                 </Button>
                             </Form>
                         </Card.Body>
