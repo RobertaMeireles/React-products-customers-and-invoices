@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -6,7 +7,43 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 
-const UpdateCustomer = () => {
+const UpdateCustomer = (props) => {
+
+    const initialCustomer = { 
+        id: null,
+        nome: "", 
+        idade: "", 
+        morada: "", 
+        cod_postal: ""
+    }
+
+    const [currentCustomer, setCurrentCustomer] = useState(initialCustomer)
+
+    const getCustomer = (id) => {
+        services.getId(`customers/id/${id}`)
+        .then(response => {
+            setCurrentCustomer(response.data.customer)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+
+    const handleInputChange = e => {
+        const { name, value } = e.target
+        setCurrentCustomer({ ...currentCustomer, [name]: value })
+    }
+
+    const updateCustomer = (e) => {
+        services.update('Customer',`customers/update/${currentCustomer.id}`, currentCustomer)
+    }
+
+    useEffect (() =>{
+
+        getCustomer(props.match.params.id)
+
+    },[props.match.params.id])
+
     return (
         <>
             <header>
@@ -19,24 +56,31 @@ const UpdateCustomer = () => {
                 <div className = "card-div">
                     <Card>
                         <Card.Body>
-                            <h1>New Customer</h1>
-                            <Form className="form-itens">
+                            <h1>Update Customer</h1>
+                            <Form className="form-itens" onSubmit={updateCustomer}>
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Name" name="nome"/>
+                                    <Form.Control type="text" name="nome"
+                                     defaultValue={currentCustomer.nome}
+                                     onChange={handleInputChange}/>
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Age" name="idade" />
+                                    <Form.Control type="text" name="idade"
+                                    defaultValue={currentCustomer.idade} 
+                                    onChange={handleInputChange}/>
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Adress" name="morada" />
+                                    <Form.Control type="text" name="morada"
+                                    defaultValue={currentCustomer.morada}
+                                    onChange={handleInputChange}/>
                                 </Form.Group>
 
-                                <Form.Group name="id_cod_postal" controlId="exampleForm.ControlSelect1" >
-                                    <Form.Control as="select">
-                                        <option value="" disabled selected>Choose your option</option>
-                                        <option value="" disabled selected>Zip Code</option>
+                                <Form.Group controlId="exampleForm.ControlSelect1" >
+                                    <Form.Control as="select" 
+                                    name="cod_postal" 
+                                    value={currentCustomer.cod_postal}
+                                    onChange={handleInputChange}>
                                         <option value="1500">Lisboa</option>
                                         <option value="2350">Torres Novas</option>
                                         <option value="4000">Porto</option>
@@ -47,8 +91,8 @@ const UpdateCustomer = () => {
                                 <Button className="form-submit" variant="primary" type="submit">
                                     Submit
                                 </Button>
-                                <Button variant="danger" type="submit">
-                                    Cancel
+                                <Button variant="danger" type="button">
+                                    <a  className="link-form" href="/home">Cancel</a>
                                 </Button>
                             </Form>
                         </Card.Body>
