@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -6,7 +7,39 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 
-const DeleteCustomer = () => {
+const DeleteCustomer = (props) => {
+
+    const initialCustomer = { 
+        id: null,
+        nome: "", 
+        idade: "", 
+        morada: "", 
+        id_cod_postal: ""
+    }
+
+    const [currentCustomer, setCurrentCustomer] = useState(initialCustomer)
+
+    const getCustomer = (id) => {
+        services.getId(`customers/id/${id}`)
+        .then(response => {
+            setCurrentCustomer(response.data.customer)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+
+    const deleteCustomer = () => {
+        services.deleteId('Customer',`customers/delete/${currentCustomer.id}`, currentCustomer)
+        props.history.push("/home")
+    }
+
+    useEffect (() =>{
+
+        getCustomer(props.match.params.id)
+
+    },[props.match.params.id])
+
     return (
         <>
             <header>
@@ -20,23 +53,27 @@ const DeleteCustomer = () => {
                     <Card>
                         <Card.Body>
                             <h1>New Customer</h1>
-                            <Form className="form-itens">
+                            <Form className="form-itens" onSubmit={deleteCustomer}>
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Name" name="nome"/>
+                                    <Form.Control type="text" name="nome"
+                                    disabled="disabled"
+                                    defaultValue={currentCustomer.nome}/>
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Age" name="idade" />
+                                    <Form.Control type="text" name="idade" 
+                                    disabled="disabled"
+                                    defaultValue={currentCustomer.idade}/>
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.Control type="text" placeholder="Adress" name="morada" />
+                                    <Form.Control type="text" name="morada" 
+                                    disabled="disabled"
+                                    defaultValue={currentCustomer.morada}/>
                                 </Form.Group>
 
                                 <Form.Group name="id_cod_postal" controlId="exampleForm.ControlSelect1" >
-                                    <Form.Control as="select">
-                                        <option value="" disabled selected>Choose your option</option>
-                                        <option value="" disabled selected>Zip Code</option>
+                                    <Form.Control as="select" value={currentCustomer.id_cod_postal} disabled="disabled">
                                         <option value="1500">Lisboa</option>
                                         <option value="2350">Torres Novas</option>
                                         <option value="4000">Porto</option>
@@ -47,8 +84,8 @@ const DeleteCustomer = () => {
                                 <Button className="form-submit" variant="primary" type="submit">
                                     Submit
                                 </Button>
-                                <Button variant="danger" type="submit">
-                                    Cancel
+                                <Button variant="danger" type="button">
+                                    <a  className="link-form" href="/home">Cancel</a>
                                 </Button>
                             </Form>
                         </Card.Body>
