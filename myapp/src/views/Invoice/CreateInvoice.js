@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import authHeader from "../../services/auth-header"
+// import axios from "axios"
+// import authHeader from "../../services/auth-header"
 import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
@@ -51,7 +51,7 @@ const CreateInvoice = () => {
     }
 
     const createInvoice = () => {
-        services.create('Invoice','invoices', 
+        services.create('invoices', 
         {
             id_cliente: customer,
             invoiceLines: [
@@ -60,6 +60,16 @@ const CreateInvoice = () => {
                     quantidade: quantity,
                 }
             ]
+        })
+        .then((res) => {
+            if (res) {
+              alert(`Invoice registrated.`)
+              window.location.href = "/home"
+            }
+          }).catch((error) => {
+            console.error(error)
+            alert(`A problem occurred in the registration, try again later.`)
+            window.location.href = "/home"
         })
     }
         
