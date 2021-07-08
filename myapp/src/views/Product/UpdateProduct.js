@@ -33,8 +33,15 @@ const UpdateProduct = (props) => {
         })
     }
 
-    const updateProduct = (e) => {
-        services.update('Product',`products/update/${currentProduct.id}`, currentProduct)
+    const updateProduct = () => {
+        services.update(`products/update/${currentProduct.id}`, currentProduct)
+          .then((res) => {
+            alert(`Product updated.`)
+            return res.data
+        }).catch((error) => {
+            console.error(error)
+            alert(`A problem occurred in the update, try again later.`)
+        })
       }
       
     useEffect (() =>{

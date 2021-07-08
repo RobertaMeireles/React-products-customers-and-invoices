@@ -34,8 +34,15 @@ const UpdateCustomer = (props) => {
         setCurrentCustomer({ ...currentCustomer, [name]: value })
     }
 
-    const updateCustomer = (e) => {
-        services.update('Customer',`customers/update/${currentCustomer.id}`, currentCustomer)
+    const updateCustomer = () => {
+        services.update(`customers/update/${currentCustomer.id}`, currentCustomer)
+        .then((res) => {
+            alert(`Customer updated.`)
+            return res.data
+          }).catch((error) => {
+            console.error(error)
+            alert(`A problem occurred in the update, try again later.`)
+        })
     }
 
     useEffect (() =>{
