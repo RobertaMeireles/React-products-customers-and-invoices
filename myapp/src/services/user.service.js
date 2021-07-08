@@ -26,15 +26,19 @@ const update = (info, request, data) => {
 })
 }
 
-const deleteId = (info, request, data) => {
+const deleteId = (request, data) => {
   return axios.put(`${API_URL}${request}`, data, { headers: authHeader() })
-  .then((res) => {
-    alert(`${info} deleted.`)
-  }).catch((error) => {
-    console.error(error)
-    alert(`A problem occurred in the deleted, try again later.`)
-})
 }
+
+// const deleteId = (info, request, data) => {
+//   return axios.put(`${API_URL}${request}`, data, { headers: authHeader() })
+//   .then((res) => {
+//     alert(`${info} deleted.`)
+//   }).catch((error) => {
+//     console.error(error)
+//     alert(`A problem occurred in the deleted, try again later.`)
+// })
+// }
 
 // eslint-disable-next-line
 export default {

@@ -30,7 +30,12 @@ const DeleteCustomer = (props) => {
     }
 
     const deleteCustomer = () => {
-        services.deleteId('Customer',`customers/delete/${currentCustomer.id}`, currentCustomer)
+        services.deleteId(`customers/delete/${currentCustomer.id}`, currentCustomer)
+        .then(() => {
+            alert(`Customer deleted.`)
+          }).catch(() => {
+            alert(`A problem occurred in the deleted, try again later.`)
+        })
         props.history.push("/home")
     }
 

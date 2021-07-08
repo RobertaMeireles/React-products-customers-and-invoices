@@ -30,7 +30,12 @@ const DeleteProduct = (props) => {
     }
 
     const deleteProduct = () => {
-        services.deleteId('Product',`products/delete/${currentProduct.id}`, currentProduct)
+        services.deleteId(`products/delete/${currentProduct.id}`, currentProduct)
+        .then(() => {
+            alert(`Product deleted.`)
+          }).catch(() => {
+            alert(`A problem occurred in the deleted, try again later.`)
+        })
         props.history.push("/home")
     }
 
