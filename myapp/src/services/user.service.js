@@ -6,7 +6,7 @@ const API_URL = "http://localhost:5000/api/"
 const create = (info, request, data) => {
     return axios.post( `${API_URL}${request}`, data, { headers: authHeader() })
     .then((res) => {
-      if (res.data) {
+      if (res) {
         console.log(res.data)
         alert(`${info} registrated.`)
         window.location.href = "/home"
@@ -19,11 +19,14 @@ const create = (info, request, data) => {
   })
 }
 
+const getAll = (request) => {
+  return axios.get( `${API_URL}${request}`, { headers: authHeader() })
+}
+
 
 const getId = (request) => {
   return axios.get( `${API_URL}${request}`, { headers: authHeader() })
 }
-
 
 const update = (info, request, data) => {
   return axios.put(`${API_URL}${request}`, data, { headers: authHeader() })
@@ -46,10 +49,10 @@ const deleteId = (info, request, data) => {
 })
 }
 
-
 // eslint-disable-next-line
 export default {
   create,
+  getAll,
   getId,
   update,
   deleteId,

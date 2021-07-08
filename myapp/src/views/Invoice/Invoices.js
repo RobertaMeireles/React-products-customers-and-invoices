@@ -15,6 +15,7 @@ const Invoices = () => {
         axios.get('http://localhost:5000/api/invoices', { headers: authHeader() })
         .then(response => {
             setInvoices(response.data.invoices)
+            console.log(response.data.invoices)
         })
         .catch(error => {
             console.error(error)
@@ -46,7 +47,7 @@ const Invoices = () => {
                                     <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Update / Delete</th>
+                                    <th>Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,7 +55,7 @@ const Invoices = () => {
                                     <tr key={invoice.id}>
                                         <td>{invoice.id}</td>
                                         <td>{invoice.cliente}</td>
-                                        <td><a href={'/invoice/update/'+ invoice.id}><i className="fas fa-edit update"></i></a><a href={'/invoice/delete/'+ invoice.id}><i className="fas fa-times-circle delete"></i></a></td>
+                                        <td><a href={'/invoice/'+ invoice.id}><i className="fas fa-info-circle"></i></a></td>
                                     </tr>
                                 ))}
                                 </tbody>
