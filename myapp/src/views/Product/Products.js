@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import authHeader from "../../services/auth-header"
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -13,7 +12,7 @@ const Products = () => {
     const [products, setProducts] = useState([])
 
     const getProducts = () => {
-        axios.get('http://localhost:5000/api/products', { headers: authHeader() })
+        services.getAll(`products`)
         .then(response => {
             setProducts(response.data.products)
         })
@@ -62,7 +61,9 @@ const Products = () => {
                                     <tr key={product.id}>
                                         <td>{product.id}</td>
                                         <td>{product.designacao}</td>
-                                        <td><a href={'/products/update/'+ product.id}><i className="fas fa-edit update"></i></a><a href={'/product/delete/'+ product.id}><i className="fas fa-times-circle delete"></i></a></td>
+                                        <td><a href={'/products/update/'+ product.id}><i className="fas fa-edit update"></i></a>
+                                            <a href={'/product/delete/'+ product.id}><i className="fas fa-times-circle delete"></i></a>
+                                        </td>
                                     </tr>
                                 ))}
                                 </tbody>
