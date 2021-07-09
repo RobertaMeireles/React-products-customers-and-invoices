@@ -59,6 +59,7 @@ a.nav-link.side-bar {
 }
 
 .table i.update{
+    padding-right: 1rem;
     color: #F6B40F;
     cursor: pointer;
 }
