@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import authHeader from "../../services/auth-header"
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -12,7 +11,7 @@ const Cutomers = () => {
     const [customers, setCustomers] = useState([])
 
     const getCutomers = () => {
-        axios.get('http://localhost:5000/api/customers', { headers: authHeader() })
+        services.getAll(`customers`)
         .then(response => {
             setCustomers(response.data.customers)
         })
