@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import authHeader from "../../services/auth-header"
+import services from "../../services/user.service"
 import Header from '../../components/Header'
 import SiderBar from '../../components/SideBar'
 import Card from 'react-bootstrap/Card'
@@ -12,7 +11,7 @@ const Invoices = () => {
     const [invoices, setInvoices] = useState([])
 
     const getInvoices = () => {
-        axios.get('http://localhost:5000/api/invoices', { headers: authHeader() })
+        services.getAll(`invoices`)
         .then(response => {
             setInvoices(response.data.invoices)
             console.log(response.data.invoices)
@@ -55,7 +54,9 @@ const Invoices = () => {
                                     <tr key={invoice.id}>
                                         <td>{invoice.id}</td>
                                         <td>{invoice.cliente}</td>
-                                        <td><a href={'/invoice/'+ invoice.id}><i className="fas fa-info-circle"></i></a></td>
+                                        <td><a href={'/invoice/'+ invoice.id}>
+                                            <i className="fas fa-info-circle"></i></a>
+                                        </td>
                                     </tr>
                                 ))}
                                 </tbody>
