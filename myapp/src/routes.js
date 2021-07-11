@@ -15,6 +15,7 @@ import UpdateCustomers from './views/Customer/UpdateCustomer'
 import DeleteCustomers from './views/Customer/DeleteCustomer'
 import Invoices from './views/Invoice/Invoices'
 import CreateInvoices from './views/Invoice/CreateInvoice'
+import DetailsInvoice from './views/Invoice/DetailsInvoice'
 
 export default function Routes(){
     return(
@@ -31,6 +32,7 @@ export default function Routes(){
             <Route path='/customer/create' component={CreateCustomers} />
             <Route path='/customers' component={Customers} />
             <Route path='/invoice/create' component={CreateInvoices} />
+            <Route path='/invoice/details/:id' component={DetailsInvoice} />
             <Route path='/invoices' component={Invoices} />
         </Switch>
     )

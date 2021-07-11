@@ -54,7 +54,7 @@ const Invoices = () => {
                                     <tr key={invoice.id}>
                                         <td>{invoice.id}</td>
                                         <td>{invoice.cliente}</td>
-                                        <td><a href={'/invoice/'+ invoice.id}>
+                                        <td><a href={'/invoice/details/'+ invoice.id}>
                                             <i className="fas fa-info-circle"></i></a>
                                         </td>
                                     </tr>
