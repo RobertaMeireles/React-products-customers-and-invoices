@@ -25,13 +25,23 @@ const CreateProduct = () => {
     }
 
     const createProduct = () => {
-        services.create('Product','products', 
+        services.create('products', 
             {
                 designacao: designation,
                 descricao: description,
                 preco: price,
                 id_categoria: category
             })
+        .then((res) => {
+            if (res) {
+                alert(`Product registrated.`)
+                window.location.href = "/home"
+            }
+            }).catch((error) => {
+            console.error(error)
+            alert(`A problem occurred in the registration, try again later.`)
+            window.location.href = "/home"
+        })
     }
 
     return (

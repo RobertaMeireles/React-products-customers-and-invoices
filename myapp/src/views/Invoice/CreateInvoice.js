@@ -61,7 +61,6 @@ const CreateInvoice = () => {
             ]
         }
         services.create('invoices', data)
-        console.log(data)
         .then((res) => {
             if (res) {
               alert(`Invoice registrated.`)

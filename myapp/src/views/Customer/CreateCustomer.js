@@ -25,13 +25,23 @@ const CreateCustomer = () => {
     }
 
     const createCustomer = () => {
-        services.create('Customer','customers', 
+        services.create('customers', 
             {
                 nome: name,
                 idade: age,
                 morada: adress,
                 cod_postal: zipCode
             })
+        .then((res) => {
+            if (res) {
+                alert(`Customer registrated.`)
+                window.location.href = "/home"
+            }
+            }).catch((error) => {
+            console.error(error)
+            alert(`A problem occurred in the registration, try again later.`)
+            window.location.href = "/home"
+        })
     }
     return (
         <>
