@@ -51,16 +51,17 @@ const CreateInvoice = () => {
     }
 
     const createInvoice = () => {
-        services.create('invoices', 
-        {
-            id_cliente: customer,
+        const data = {
+            id_cliente: parseInt(customer),
             invoiceLines: [
                 {
-                    id_produto: product,
-                    quantidade: quantity,
+                    id_produto: parseInt(product),
+                    quantidade: parseInt(quantity),
                 }
             ]
-        })
+        }
+        services.create('invoices', data)
+        console.log(data)
         .then((res) => {
             if (res) {
               alert(`Invoice registrated.`)
@@ -97,14 +98,14 @@ const CreateInvoice = () => {
 
                             <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Control as="select" onChange={(e) => setCustomer(e.target.value)}>
-                                <option value="" disabled selected >Customer</option>
+                                <option value="" disabled selected>Customer</option>
                                 {customers.map(customer => (<option key={customer.id} value={customer.id}>{customer.nome}</option>))}
                                 </Form.Control>
                             </Form.Group>
 
                             <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Control as="select" onChange={(e) => setProduct(e.target.value)}>
-                                <option value="" disabled selected >Product</option>
+                                <option value="" disabled selected>Product</option>
                                 {products.map(product => (<option key={product.id} value={product.id}>{product.designacao}</option>))}
                                 </Form.Control>
                             </Form.Group>
